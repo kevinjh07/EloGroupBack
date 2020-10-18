@@ -5,6 +5,8 @@ namespace EloGroupBack.Models.Dto
 {
     public class LeadDto
     {
+        public int Id { get; set; }
+        
         [Required]
         [MaxLength(120)]
         public string CustomerName { get; set; }
@@ -19,5 +21,7 @@ namespace EloGroupBack.Models.Dto
         public string CustomerEmail { get; set; }
 
         public IEnumerable<OpportunityDto> Opportunities { get; set; }
+        
+        public int StatusId { get; set; }
     }
 }
