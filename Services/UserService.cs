@@ -30,7 +30,7 @@ namespace EloGroupBack.Services
 
             if (!result.Succeeded)
             {
-                throw new UnprocessableEntityException("Já existe um usuário cadastrado com nome");
+                throw new UnprocessableEntityException("Não foi possível cadastrar o usuário, tente novamente");
             }
 
             return await _authService.LoginAsync(loginDto);
@@ -41,7 +41,7 @@ namespace EloGroupBack.Services
             if (_userManager.Users.Any(u => string.Compare(userName, u.UserName,
                 StringComparison.CurrentCultureIgnoreCase) == 0))
             {
-                throw new UnprocessableEntityException("Já existe um usuário cadastrado com nome");
+                throw new UnprocessableEntityException("Já existe um usuário cadastrado com este nome");
             }
         }
     }
