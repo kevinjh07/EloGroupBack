@@ -5,6 +5,7 @@ using EloGroupBack.Configuration;
 using EloGroupBack.Context;
 using EloGroupBack.Helpers;
 using EloGroupBack.Models;
+using EloGroupBack.Models.Dto;
 using EloGroupBack.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -115,6 +116,8 @@ namespace EloGroupBack
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILeadService, LeadService>();
+            services.AddScoped<IStatusLeadService, StatusLeadService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -139,6 +142,27 @@ namespace EloGroupBack
             app.UseMvc(routes => routes.MapRoute(
                 "default",
                 "{controller}/{action=Index}/{id?}"));
+
+            if (serviceProvider.GetRequiredService<ApplicationContext>().Database.ProviderName !=
+                "Microsoft.EntityFrameworkCore.InMemory")
+            {
+                serviceProvider.GetRequiredService<ApplicationContext>().Database.Migrate();
+            }
+
+            CreateStatusLead(serviceProvider);
+        }
+
+        private void CreateStatusLead(IServiceProvider serviceProvider)
+        {
+            string[] statuses = {"Cliente em Potencial", "Dados Confirmados", "Reunião Agendada"};
+
+            foreach (var status in statuses)
+            {
+                var statusLeadService = serviceProvider.GetRequiredService<IStatusLeadService>();
+                if (statusLeadService.StatusLeadExists(status)) continue;
+                var statusLead = new StatusLeadDto(status);
+                statusLeadService.SaveStatusLead(statusLead);
+            }
         }
     }
 }

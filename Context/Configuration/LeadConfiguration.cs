@@ -28,9 +28,6 @@ namespace EloGroupBack.Context.Configuration
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(x => x.StatusId)
-                .IsRequired();
-
             builder.HasOne(x => x.Customer)
                 .WithOne(x => x.Lead)
                 .HasForeignKey<Customer>(x => x.LeadId);

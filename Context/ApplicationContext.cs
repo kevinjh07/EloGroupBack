@@ -14,6 +14,10 @@ namespace EloGroupBack.Context
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Lead> Leads { get; set; }
+        public DbSet<StatusLead> StatusLeads { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Opportunity> Opportunities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -12,6 +12,8 @@ namespace EloGroupBack.Helpers
             CreateMap<LeadDto, Lead>();
             CreateMap<Opportunity, OpportunityDto>();
             CreateMap<OpportunityDto, Opportunity>();
+            CreateMap<StatusLead, StatusLeadDto>();
+            CreateMap<StatusLeadDto, StatusLead>();
         }
     }
 }
