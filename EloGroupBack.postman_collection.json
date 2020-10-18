@@ -7,6 +7,33 @@
 	},
 	"item": [
 		{
+			"name": "POST /login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userName\": \"elogroup\",\n    \"password\": \"nGX=4Ye5\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "POST /users",
 			"request": {
 				"method": "POST",
@@ -33,13 +60,19 @@
 			"response": []
 		},
 		{
-			"name": "POST /login",
+			"name": "POST /lead",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzIiwibmJmIjoxNjAyOTg3Nzk4LCJleHAiOjE2MDI5OTg1OTgsImlhdCI6MTYwMjk4Nzc5OH0.PFiA4Avu3_y92cQ1FZwuTMr_9i7pXLgJlGc3SnLHD24",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"userName\": \"elogroup\",\n    \"password\": \"nGX=4Ye5\"\n}",
+					"raw": "{\n    \"customerName\": \"customer 01\",\n    \"customerEmail\": \"techdev@elogroup.com\",\n    \"customerPhone\": \"319999999999\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -47,13 +80,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/auth/login",
+					"raw": "{{baseUrl}}/leads",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"auth",
-						"login"
+						"leads"
 					]
 				}
 			},
@@ -84,7 +116,7 @@
 	],
 	"variable": [
 		{
-			"id": "e9349ad7-6a7f-45f7-9912-72deab93354a",
+			"id": "e4b96125-2f6f-49f0-8672-18f1a358a700",
 			"key": "baseUrl",
 			"value": "https://localhost:5001/api"
 		}
