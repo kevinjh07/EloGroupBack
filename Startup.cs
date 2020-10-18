@@ -3,7 +3,9 @@ using System.Text;
 using AutoMapper;
 using EloGroupBack.Configuration;
 using EloGroupBack.Context;
+using EloGroupBack.Helpers;
 using EloGroupBack.Models;
+using EloGroupBack.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -111,6 +113,9 @@ namespace EloGroupBack
             });
 
             #endregion
+
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,6 +13,9 @@ namespace EloGroupBack.Context.Configuration
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd();
 
+            builder.Property(x => x.Description)
+                .IsRequired();
+
             builder.HasOne(x => x.Lead)
                 .WithMany(x => x.Opportunities);
         }
