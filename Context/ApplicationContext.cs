@@ -19,6 +19,9 @@ namespace EloGroupBack.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new LeadConfiguration());
+            modelBuilder.ApplyConfiguration(new StatusLeadConfiguration());
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+            modelBuilder.ApplyConfiguration(new OpportunityConfiguration());
         }
     }
 }

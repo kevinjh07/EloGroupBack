@@ -4,36 +4,22 @@ using EloGroupBack.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EloGroupBack.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20201017233547_AddStatusLead")]
+    partial class AddStatusLead
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("EloGroupBack.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LeadId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LeadId")
-                        .IsUnique();
-
-                    b.ToTable("Customer");
-                });
 
             modelBuilder.Entity("EloGroupBack.Models.Lead", b =>
                 {
@@ -64,29 +50,13 @@ namespace EloGroupBack.Migrations
                     b.ToTable("Lead");
                 });
 
-            modelBuilder.Entity("EloGroupBack.Models.Opportunity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LeadId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LeadId");
-
-                    b.ToTable("Opportunity");
-                });
-
             modelBuilder.Entity("EloGroupBack.Models.StatusLead", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(120);
+                    b.Property<string>("Description");
 
                     b.HasKey("Id");
 
@@ -268,27 +238,11 @@ namespace EloGroupBack.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("EloGroupBack.Models.Customer", b =>
-                {
-                    b.HasOne("EloGroupBack.Models.Lead", "Lead")
-                        .WithOne("Customer")
-                        .HasForeignKey("EloGroupBack.Models.Customer", "LeadId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("EloGroupBack.Models.Lead", b =>
                 {
                     b.HasOne("EloGroupBack.Models.StatusLead", "Status")
                         .WithMany("Leads")
                         .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EloGroupBack.Models.Opportunity", b =>
-                {
-                    b.HasOne("EloGroupBack.Models.Lead", "Lead")
-                        .WithMany("Opportunities")
-                        .HasForeignKey("LeadId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

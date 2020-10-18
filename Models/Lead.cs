@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace EloGroupBack.Models
 {
@@ -15,5 +16,11 @@ namespace EloGroupBack.Models
         public string CustomerEmail { get; set; }
 
         public int StatusId { get; set; }
+
+        public StatusLead Status { get; set; }
+
+        public Customer Customer { get; set; }
+
+        public ICollection<Opportunity> Opportunities { get; set; }
     }
 }

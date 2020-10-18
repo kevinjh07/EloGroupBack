@@ -19,17 +19,21 @@ namespace EloGroupBack.Context.Configuration
             builder.Property(x => x.CustomerName)
                 .HasMaxLength(120)
                 .IsRequired();
-            
+
             builder.Property(x => x.CustomerPhone)
                 .HasMaxLength(12)
                 .IsRequired();
-            
+
             builder.Property(x => x.CustomerEmail)
                 .HasMaxLength(255)
                 .IsRequired();
 
             builder.Property(x => x.StatusId)
                 .IsRequired();
+
+            builder.HasOne(x => x.Customer)
+                .WithOne(x => x.Lead)
+                .HasForeignKey<Customer>(x => x.LeadId);
         }
     }
 }

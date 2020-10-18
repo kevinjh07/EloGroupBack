@@ -4,14 +4,16 @@ using EloGroupBack.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EloGroupBack.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20201018000122_AddCustomer")]
+    partial class AddCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,21 +64,6 @@ namespace EloGroupBack.Migrations
                     b.HasIndex("StatusId");
 
                     b.ToTable("Lead");
-                });
-
-            modelBuilder.Entity("EloGroupBack.Models.Opportunity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LeadId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LeadId");
-
-                    b.ToTable("Opportunity");
                 });
 
             modelBuilder.Entity("EloGroupBack.Models.StatusLead", b =>
@@ -281,14 +268,6 @@ namespace EloGroupBack.Migrations
                     b.HasOne("EloGroupBack.Models.StatusLead", "Status")
                         .WithMany("Leads")
                         .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EloGroupBack.Models.Opportunity", b =>
-                {
-                    b.HasOne("EloGroupBack.Models.Lead", "Lead")
-                        .WithMany("Opportunities")
-                        .HasForeignKey("LeadId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
