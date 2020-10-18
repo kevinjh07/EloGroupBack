@@ -5,6 +5,6 @@ namespace EloGroupBack.Services
 {
     public interface IUserService
     {
-        Task<ResponseDto> SaveUser(LoginDto userDto);
+        Task<string> SaveUser(LoginDto userDto);
     }
 }

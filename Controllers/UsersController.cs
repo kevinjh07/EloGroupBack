@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using EloGroupBack.Exceptions;
 using EloGroupBack.Models;
 using EloGroupBack.Models.Dto;
 using EloGroupBack.Services;
@@ -21,11 +22,20 @@ namespace EloGroupBack.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> PostUser([FromBody] LoginDto userDto)
         {
-            var result = await _userService.SaveUser(userDto);
-
-            return Ok(result);
+            try
+            {
+                var result = await _userService.SaveUser(userDto);
+                var response = new ResponseDto(nameof(PostUser), ResultadoResponse.Sucesso, new {token = result});
+                return Ok(response);
+            }
+            catch (UnprocessableEntityException e)
+            {
+                var response = new ResponseDto(nameof(PostUser), ResultadoResponse.Erro, new {message = e.Message});
+                return UnprocessableEntity(response);
+            }
         }
     }
 }

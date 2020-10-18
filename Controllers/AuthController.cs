@@ -30,7 +30,7 @@ namespace EloGroupBack.Controllers
             }
             catch (UnprocessableEntityException e)
             {
-                var response = new ResponseDto(nameof(Login), ResultadoResponse.Sucesso, new {message = e.Message});
+                var response = new ResponseDto(nameof(Login), ResultadoResponse.Erro, new {message = e.Message});
                 return UnprocessableEntity(response);
             }
         }

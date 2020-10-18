@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using EloGroupBack.Exceptions;
 using EloGroupBack.Models;
 using EloGroupBack.Models.Dto;
 using Microsoft.AspNetCore.Identity;
@@ -11,19 +12,17 @@ namespace EloGroupBack.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserService(UserManager<ApplicationUser> userManager)
+        private readonly IAuthService _authService;
+
+        public UserService(UserManager<ApplicationUser> userManager, IAuthService authService)
         {
             _userManager = userManager;
+            _authService = authService;
         }
 
-        public async Task<ResponseDto> SaveUser(LoginDto loginDto)
+        public async Task<string> SaveUser(LoginDto loginDto)
         {
-            if (_userManager.Users.Any(u => string.Compare(loginDto.UserName, u.UserName,
-                StringComparison.CurrentCultureIgnoreCase) == 0))
-            {
-                return new ResponseDto(nameof(SaveUser), ResultadoResponse.Erro,
-                    new {message = "Já existe um usuário cadastrado com nome"});
-            }
+            ValidateSameUsername(loginDto.UserName);
 
             var user = new ApplicationUser {UserName = loginDto.UserName};
 
@@ -31,12 +30,19 @@ namespace EloGroupBack.Services
 
             if (!result.Succeeded)
             {
-                return new ResponseDto(nameof(SaveUser), ResultadoResponse.Erro,
-                    new {message = "Não foi possível cadastrar o usuário, tente novamente"});
+                throw new UnprocessableEntityException("Já existe um usuário cadastrado com nome");
             }
 
-            user.PasswordHash = string.Empty;
-            return new ResponseDto(nameof(SaveUser), ResultadoResponse.Sucesso, null);
+            return await _authService.LoginAsync(loginDto);
+        }
+
+        private void ValidateSameUsername(string userName)
+        {
+            if (_userManager.Users.Any(u => string.Compare(userName, u.UserName,
+                StringComparison.CurrentCultureIgnoreCase) == 0))
+            {
+                throw new UnprocessableEntityException("Já existe um usuário cadastrado com nome");
+            }
         }
     }
 }
