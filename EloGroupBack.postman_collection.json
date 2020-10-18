@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "8a21c2d3-a094-491a-abfc-4d9479e02629",
+		"name": "EloGroupBack",
+		"description": "Coleção para teste da api EloGroupBack - Desafio TechDEV EloGroup",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userName\": \"elogroup\",\n    \"password\": \"nGX=4Ye5\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userName\": \"elogroup\",\n    \"password\": \"nGX=4Ye5\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2bcf2eb5-d4dc-458d-9804-22b05b0b5c3e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3be9bc79-ab0f-4e75-9313-fb76698a2079",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "e9349ad7-6a7f-45f7-9912-72deab93354a",
+			"key": "baseUrl",
+			"value": "https://localhost:5001/api"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

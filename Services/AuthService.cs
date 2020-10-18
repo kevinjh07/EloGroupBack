@@ -33,7 +33,7 @@ namespace EloGroupBack.Services
             if (user == null)
             {
                 return new ResponseDto(nameof(LoginAsync), ResultadoResponse.Erro,
-                    new {message = "Usuário não encontrado"});
+                    new {message = "Usuário não encontrado!"});
             }
 
             if (!await _userManager.CheckPasswordAsync(user, login.Password))
@@ -50,7 +50,8 @@ namespace EloGroupBack.Services
             var tokenDescriptor = GetSecurityTokenDescriptor(user);
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            return new ResponseDto(nameof(LoginAsync), ResultadoResponse.Sucesso, securityToken);
+            return new ResponseDto(nameof(LoginAsync), ResultadoResponse.Sucesso,
+                new {token = tokenHandler.WriteToken(securityToken)});
         }
 
         private SecurityTokenDescriptor GetSecurityTokenDescriptor(ApplicationUser user)

@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace EloGroupBack
 {
@@ -50,6 +51,7 @@ namespace EloGroupBack
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
@@ -72,9 +74,6 @@ namespace EloGroupBack
 
             services.Configure<IdentityOptions>(options =>
             {
-                options.SignIn.RequireConfirmedEmail = false;
-
-                options.User.RequireUniqueEmail = true;
                 options.User.AllowedUserNameCharacters = null;
 
                 options.Password.RequireDigit = true;
