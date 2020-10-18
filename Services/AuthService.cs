@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using EloGroupBack.Configuration;
+using EloGroupBack.Exceptions;
 using EloGroupBack.Models;
 using EloGroupBack.Models.Dto;
 using Microsoft.AspNetCore.Identity;
@@ -26,32 +27,29 @@ namespace EloGroupBack.Services
             _userManager = userManager;
         }
 
-        public async Task<ResponseDto> LoginAsync(LoginDto login)
+        public async Task<string> LoginAsync(LoginDto login)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.UserName == login.UserName);
 
             if (user == null)
             {
-                return new ResponseDto(nameof(LoginAsync), ResultadoResponse.Erro,
-                    new {message = "Usuário não encontrado!"});
+                throw new UnprocessableEntityException("Usuário não encontrado!");
             }
 
             if (!await _userManager.CheckPasswordAsync(user, login.Password))
             {
-                return new ResponseDto(nameof(LoginAsync), ResultadoResponse.Erro,
-                    new {message = "Usuário ou senha inválidos!"});
+                throw new UnprocessableEntityException("Usuário ou senha inválidos!");
             }
 
-            return GetResponseSucces(user);
+            return GetToken(user);
         }
 
-        private ResponseDto GetResponseSucces(ApplicationUser user)
+        private string GetToken(ApplicationUser user)
         {
             var tokenDescriptor = GetSecurityTokenDescriptor(user);
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            return new ResponseDto(nameof(LoginAsync), ResultadoResponse.Sucesso,
-                new {token = tokenHandler.WriteToken(securityToken)});
+            return tokenHandler.WriteToken(securityToken);
         }
 
         private SecurityTokenDescriptor GetSecurityTokenDescriptor(ApplicationUser user)

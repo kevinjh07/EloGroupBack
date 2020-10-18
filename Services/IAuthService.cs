@@ -5,6 +5,6 @@ namespace EloGroupBack.Services
 {
     public interface IAuthService
     {
-        Task<ResponseDto> LoginAsync(LoginDto login);
+        Task<string> LoginAsync(LoginDto login);
     }
 }

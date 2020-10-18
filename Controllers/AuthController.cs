@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using EloGroupBack.Exceptions;
+using EloGroupBack.Models;
 using EloGroupBack.Models.Dto;
 using EloGroupBack.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +22,17 @@ namespace EloGroupBack.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto login)
         {
-            var response = await _authService.LoginAsync(login);
-            return Ok(response);
+            try
+            {
+                var token = await _authService.LoginAsync(login);
+                var response = new ResponseDto(nameof(Login), ResultadoResponse.Sucesso, new {token});
+                return Ok(response);
+            }
+            catch (UnprocessableEntityException e)
+            {
+                var response = new ResponseDto(nameof(Login), ResultadoResponse.Sucesso, new {message = e.Message});
+                return UnprocessableEntity(response);
+            }
         }
     }
 }
