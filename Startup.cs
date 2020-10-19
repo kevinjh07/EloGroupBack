@@ -118,6 +118,7 @@ namespace EloGroupBack
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILeadService, LeadService>();
             services.AddScoped<IStatusLeadService, StatusLeadService>();
+            services.AddScoped<IOpportunityService, OpportunityService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -150,6 +151,7 @@ namespace EloGroupBack
             }
 
             CreateStatusLead(serviceProvider);
+            CreateOpportunities(serviceProvider);
         }
 
         private void CreateStatusLead(IServiceProvider serviceProvider)
@@ -162,6 +164,19 @@ namespace EloGroupBack
                 if (statusLeadService.StatusLeadExists(status)) continue;
                 var statusLead = new StatusLeadDto(status);
                 statusLeadService.SaveStatusLead(statusLead);
+            }
+        }
+
+        private void CreateOpportunities(IServiceProvider serviceProvider)
+        {
+            string[] opportunities = {"PPA", "Produto Digital", "Analytics", "BPM"};
+
+            foreach (var opportunity in opportunities)
+            {
+                var opportunityService = serviceProvider.GetRequiredService<IOpportunityService>();
+                if (opportunityService.OpportunityExists(opportunity)) continue;
+                var opportunityDto = new OpportunityDto(opportunity);
+                opportunityService.SaveOpportunity(opportunityDto);
             }
         }
     }

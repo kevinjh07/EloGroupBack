@@ -8,5 +8,15 @@ namespace EloGroupBack.Models.Dto
 
         [Required]
         public string Description { get; set; }
+
+        public OpportunityDto(string description)
+        {
+            Description = description;
+        }
+
+        public OpportunityDto()
+        {
+            
+        }
     }
 }

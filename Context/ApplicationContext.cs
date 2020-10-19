@@ -18,6 +18,7 @@ namespace EloGroupBack.Context
         public DbSet<StatusLead> StatusLeads { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Opportunity> Opportunities { get; set; }
+        public DbSet<LeadOpportunity> LeadOpportunities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +27,7 @@ namespace EloGroupBack.Context
             modelBuilder.ApplyConfiguration(new StatusLeadConfiguration());
             modelBuilder.ApplyConfiguration(new CustomerConfiguration());
             modelBuilder.ApplyConfiguration(new OpportunityConfiguration());
+            modelBuilder.ApplyConfiguration(new LeadOpportunityConfiguration());
         }
     }
 }

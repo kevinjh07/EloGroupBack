@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace EloGroupBack.Models
 {
     public class Opportunity
@@ -6,8 +8,6 @@ namespace EloGroupBack.Models
 
         public string Description { get; set; }
 
-        public int LeadId { get; set; }
-
-        public Lead Lead { get; set; }
+        public ICollection<LeadOpportunity> LeadOpportunities { get; set; }
     }
 }    

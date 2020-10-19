@@ -21,6 +21,6 @@ namespace EloGroupBack.Models
 
         public Customer Customer { get; set; }
 
-        public ICollection<Opportunity> Opportunities { get; set; }
+        public ICollection<LeadOpportunity> LeadOpportunities { get; set; }
     }
 }
